@@ -13,8 +13,6 @@ class ForbiddenLengthException : public std::exception
 
 int lengthStr(std::string str, int forbidden_length)
 {
-	//int current_length = str.length();
-	
 	size_t len = 0;
 
  	for (size_t i = 0; i < str.size(); i++) len += ((str[i] & 0xc0) != 0x80);
@@ -23,7 +21,6 @@ int lengthStr(std::string str, int forbidden_length)
 
 	if (current_length == forbidden_length)
 	{
-		//throw "String have forbidden length!";
 		throw ForbiddenLengthException();
 	}
 
@@ -68,7 +65,6 @@ int main()
 	}
 	catch (ForbiddenLengthException& err)
 	{
-//		std::cout << "Вы ввели слово запрещенной длины! До свидания." << std::endl;
 		std::cout << err.what() << std::endl;
 	}
 
