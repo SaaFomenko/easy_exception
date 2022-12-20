@@ -5,7 +5,7 @@
 class ForbiddenLengthException : public std::exception
 {
 	public:
-		const char* what() const override
+		const char* what() const noexcept override
 		{
 			return "Вы ввели слово запрещенной длины! До свидания.";
 		}
@@ -23,7 +23,8 @@ int lengthStr(std::string str, int forbidden_length)
 
 	if (current_length == forbidden_length)
 	{
-		throw "Вы ввели слово запрещенной длины! До свидания.";
+		//throw "String have forbidden length!";
+		throw ForbiddenLengthException();
 	}
 
 	return current_length;
@@ -42,6 +43,16 @@ int main()
 
 	userIn(forbidden_length, lable_forbidden_length);
 
+	//Clear stream
+	if(char(std::cin.peek()) == '\n')
+		std::cin.ignore();
+
+	if (std::cin.fail())
+	{
+		std::cin.clear();
+		std::cin.ignore(32767, '\n');
+	}
+
 	try
 	{
 		while (forbidden_length != current_length)
@@ -57,6 +68,7 @@ int main()
 	}
 	catch (ForbiddenLengthException& err)
 	{
+//		std::cout << "Вы ввели слово запрещенной длины! До свидания." << std::endl;
 		std::cout << err.what() << std::endl;
 	}
 
